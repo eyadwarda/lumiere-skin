@@ -1,4 +1,45 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+  /* Consistent catalogue layout */
+  .categories-grid { align-items: stretch; grid-auto-rows: 1fr; }
+  .category-card {
+    appearance: none; width: 100%; min-width: 0; min-height: 218px;
+    display: flex; flex-direction: column; align-items: flex-start;
+    text-align: left; font: inherit; color: var(--fg);
+  }
+  .category-card .category-count { position: static; align-self: flex-end; margin-bottom: 12px; }
+  .category-card .category-icon { flex: 0 0 48px; margin-bottom: 14px; }
+  .category-card h3 { min-height: 1.3em; }
+  .category-card p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .products-grid { align-items: stretch; grid-auto-rows: 1fr; }
+  .product-card { min-width: 0; height: 100%; display: flex; flex-direction: column; }
+  .product-card .product-img { flex: 0 0 auto; aspect-ratio: 4 / 3; min-height: 0; }
+  .product-card .product-img .product-photo { object-fit: cover; }
+  .product-card .product-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .product-card .product-skin-type { min-height: 1.4em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .product-card .product-body h3 {
+    min-height: 2.5em; display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere;
+  }
+  .product-card .product-body .product-desc {
+    min-height: 4.5em; display: -webkit-box; -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 18px;
+  }
+  .product-card .product-footer { margin-top: auto; min-height: 42px; gap: 12px; }
+  .product-card .product-footer > div { min-width: 0; }
+  .product-card .product-price { white-space: nowrap; }
+  .product-card .add-btn { flex: 0 0 auto; white-space: nowrap; }
+  .category-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (max-width: 900px) {
+    .category-card { min-height: 205px; }
+    .product-card .product-body { padding: 16px; }
+  }
+  @media (max-width: 540px) {
+    .category-card { min-height: 0; }
+    .product-card .product-body h3 { min-height: 0; }
+    .product-card .product-body .product-desc { min-height: 0; }
+  }
+
+</style></head><body>
 <title>Lumière Skin</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 
@@ -905,37 +946,37 @@
 </div>
 
 <!-- CATEGORIES -->
-<section class="section">
+<section class="section" id="categories">
   <div class="container">
     <div class="section-header">
-      <h2>Shop by concern</h2>
-      <p>Find exactly what your skin needs — from deep hydration to targeted treatment.</p>
+      <h2>Shop by category</h2>
+      <p>Explore the products currently available in our collection.</p>
     </div>
     <div class="categories-grid">
-      <div class="category-card cat-1">
-        <span class="category-count">14 products</span>
-        <div class="category-icon">💧</div>
-        <h3>Hydration</h3>
-        <p>Barrier-first formulas for dry, dehydrated, or sensitive skin.</p>
-      </div>
-      <div class="category-card cat-2">
-        <span class="category-count">9 products</span>
-        <div class="category-icon">✨</div>
-        <h3>Brightening</h3>
-        <p>Fade dark spots and uneven tone with Vitamin C and Alpha Arbutin.</p>
-      </div>
-      <div class="category-card cat-3">
-        <span class="category-count">11 products</span>
-        <div class="category-icon">🌿</div>
-        <h3>Anti-Aging</h3>
-        <p>Retinol, peptides, and antioxidants for firmness and elasticity.</p>
-      </div>
-      <div class="category-card cat-4">
-        <span class="category-count">7 products</span>
-        <div class="category-icon">🧪</div>
-        <h3>Acne Control</h3>
-        <p>Salicylic acid and zinc to clear pores without over-drying.</p>
-      </div>
+      <button type="button" class="category-card cat-1" data-category="Cleanser">
+        <span class="category-count" data-count-for="Cleanser">2 products</span>
+        <span class="category-icon">🫧</span>
+        <h3>Cleansers</h3>
+        <p>Daily cleansing essentials to remove buildup and keep skin feeling fresh.</p>
+      </button>
+      <button type="button" class="category-card cat-2" data-category="Serum">
+        <span class="category-count" data-count-for="Serum">3 products</span>
+        <span class="category-icon">✨</span>
+        <h3>Serums</h3>
+        <p>Targeted formulas for hydration, blemish-prone skin, and post-acne marks.</p>
+      </button>
+      <button type="button" class="category-card cat-3" data-category="Moisturizer">
+        <span class="category-count" data-count-for="Moisturizer">2 products</span>
+        <span class="category-icon">💧</span>
+        <h3>Moisturizers</h3>
+        <p>Everyday creams and balms to moisturize and support the skin barrier.</p>
+      </button>
+      <button type="button" class="category-card cat-4" data-category="Sunscreen">
+        <span class="category-count" data-count-for="Sunscreen">1 product</span>
+        <span class="category-icon">☀️</span>
+        <h3>Sunscreen</h3>
+        <p>Daily sun protection to complete your skincare routine.</p>
+      </button>
     </div>
   </div>
 </section>
