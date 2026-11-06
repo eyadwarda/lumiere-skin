@@ -745,7 +745,7 @@
 
 <!-- TOAST -->
 <div class="toast" id="toast">✓ Added to cart</div>
-<!-- CART / CHECKOUT: keeps the original storefront styling -->
+<!-- CART / CHECKOUT -->
 <div class="shop-overlay" id="overlay"></div>
 <aside class="shop-cart" id="cartDrawer" aria-label="Shopping cart">
   <div class="shop-cart-head"><div><small>YOUR SELECTION</small><h2>Your bag</h2></div><button class="shop-close" id="closeCart" aria-label="Close cart">×</button></div>
@@ -797,6 +797,7 @@
 .shop-checkout-form label{display:block;font-size:12px;color:var(--fg-muted);margin-top:14px}
 .shop-checkout-form input,.shop-checkout-form textarea{display:block;width:100%;margin-top:6px;border:1px solid var(--border);background:var(--bg);color:var(--fg);border-radius:var(--r-sm);padding:11px;font:inherit}
 .shop-checkout-form .shop-cart-total{border-top:1px solid var(--border);padding-top:15px;margin-top:20px}
+.nav-links.open{display:flex}
 @media(max-width:540px){.shop-cart{padding:20px}.shop-checkout-form{padding:20px}}
 </style>
 
@@ -944,112 +945,250 @@
   <div class="container">
     <div class="section-header">
       <h2>Bestsellers</h2>
-      <p>Formulas with over 1,000 five-star reviews — and re-order rates above 70%.</p>
+      <p>Formulas selected to make everyday skincare simple and considered.</p>
     </div>
-    <div class="products-grid">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <div class="product-img p-img-1">
-          💧
-          <span class="product-badge badge-best">Bestseller</span>
+    <div class="products-grid" id="productGrid"></div>
+    <p id="emptyProducts" class="empty-products" hidden>No products are available right now.</p>
+    <div id="categoryFilters" hidden>
+      <button data-category="All" class="active">All</button>
+      <button data-category="Cleanser">Cleanser</button>
+      <button data-category="Serum">Serum</button>
+      <button data-category="Moisturizer">Moisturizer</button>
+      <button data-category="Sunscreen">Sunscreen</button>
+    </div>
+    <input id="productSearch" type="search" hidden aria-hidden="true">
+    <select id="sortProducts" hidden aria-hidden="true"><option value="featured">Featured</option><option value="price-low">Price low to high</option><option value="price-high">Price high to low</option><option value="name">Name A–Z</option></select>
+  </div>
+</section>
+
+<!-- ROUTINE BUILDER -->
+<section class="section" id="routine">
+  <div class="container">
+    <div class="section-header">
+      <h2>Your daily routine</h2>
+      <p>A step-by-step guide to layering products correctly, so each one performs at its best.</p>
+    </div>
+    <div class="routine-section">
+      <div class="routine-tabs">
+        <button class="routine-tab active" onclick="switchTab(this,'morning')">☀️ Morning</button>
+        <button class="routine-tab" onclick="switchTab(this,'evening')">🌙 Evening</button>
+      </div>
+      <div class="routine-grid">
+        <!-- Steps -->
+        <div>
+          <div class="routine-steps" id="routineSteps"></div>
         </div>
-        <div class="product-body">
-          <div class="product-skin-type">All skin types</div>
-          <h3>Barrier Repair Serum</h3>
-          <p class="product-desc">Niacinamide 3% · Ceramide Complex · Hyaluronic Acid</p>
-          <div class="product-footer">
-            <div>
-              <span class="product-price">$48</span>
-              <div><span class="stars">★★★★★</span> <span class="rating-count">2,100</span></div>
-            </div>
-            <button class="add-btn" onclick="addToCart(this)">Add</button>
+        <!-- Visual -->
+        <div class="routine-visual" id="routineVisual">
+          <div class="routine-visual-emoji" id="visualEmoji">💧</div>
+          <h3 id="visualName">Barrier Repair Serum</h3>
+          <p id="visualDesc">Apply 3-4 drops to cleansed skin. Press gently — don't rub. Let absorb for 60 seconds before the next step.</p>
+          <div class="routine-benefits">
+            <div class="benefit-row"><div class="benefit-check">✓</div><span>Ceramides strengthen the lipid barrier</span></div>
+            <div class="benefit-row"><div class="benefit-check">✓</div><span>Hyaluronic acid pulls moisture in</span></div>
+            <div class="benefit-row"><div class="benefit-check">✓</div><span>Niacinamide evens skin tone over time</span></div>
           </div>
         </div>
       </div>
-      <!-- Product 2 -->
-      <div class="product-card">
-        <div class="product-img p-img-2">
-          ✨
-          <span class="product-badge badge-new">New</span>
-        </div>
-        <div class="product-body">
-          <div class="product-skin-type">Dull / Hyperpigmentation</div>
-          <h3>Vitamin C 15% Brightening</h3>
-          <p class="product-desc">L-Ascorbic Acid 15% · Ferulic Acid · Alpha Arbutin</p>
-          <div class="product-footer">
-            <div>
-              <span class="product-price">$54</span>
-              <div><span class="stars">★★★★★</span> <span class="rating-count">864</span></div>
-            </div>
-            <button class="add-btn" onclick="addToCart(this)">Add</button>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>What customers say</h2>
+      <p>Verified purchases only — no incentivized reviews.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar r-av-1">S</div>
+          <div>
+            <div class="review-name">Sarah M.</div>
+            <div class="review-skin">Sensitive · Dry skin</div>
           </div>
         </div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text" style="margin-top:10px">"After three weeks on the barrier serum, my skin stopped reacting to everything. I haven't had a flare-up since — and my moisturizer actually absorbs now instead of sitting on top."</p>
+        <div class="verified-badge">✓ Verified purchase · Barrier Repair Serum</div>
       </div>
-      <!-- Product 3 -->
-      <div class="product-card">
-        <div class="product-img p-img-3">
-          🌿
-          <span class="product-badge badge-sale">−20%</span>
-        </div>
-        <div class="product-body">
-          <div class="product-skin-type">Aging / Loss of firmness</div>
-          <h3>Retinol 0.5% Night Cream</h3>
-          <p class="product-desc">Encapsulated Retinol · Bakuchiol · Peptide Complex</p>
-          <div class="product-footer">
-            <div>
-              <span class="product-price"><span class="old-price">$62</span>$50</span>
-              <div><span class="stars">★★★★☆</span> <span class="rating-count">1,422</span></div>
-            </div>
-            <button class="add-btn" onclick="addToCart(this)">Add</button>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar r-av-2">M</div>
+          <div>
+            <div class="review-name">Maya T.</div>
+            <div class="review-skin">Combination · Acne-prone</div>
           </div>
         </div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text" style="margin-top:10px">"The BHA toner cleared my pores within two weeks without stripping my skin. I've tried at least eight different toners — this is the first one that doesn't make me peel or get oily by noon."</p>
+        <div class="verified-badge">✓ Verified purchase · BHA Pore Minimizing Toner</div>
       </div>
-      <!-- Product 4 -->
-      <div class="product-card">
-        <div class="product-img p-img-4">
-          🧴
-        </div>
-        <div class="product-body">
-          <div class="product-skin-type">Oily / Combination</div>
-          <h3>BHA Pore Minimizing Toner</h3>
-          <p class="product-desc">Salicylic Acid 2% · Zinc PCA · Niacinamide</p>
-          <div class="product-footer">
-            <div>
-              <span class="product-price">$32</span>
-              <div><span class="stars">★★★★★</span> <span class="rating-count">3,018</span></div>
-            </div>
-            <button class="add-btn" onclick="addToCart(this)">Add</button>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar r-av-3">R</div>
+          <div>
+            <div class="review-name">Rania K.</div>
+            <div class="review-skin">Normal · Hyperpigmentation</div>
           </div>
         </div>
+        <div class="stars">★★★★★</div>
+        <p class="review-text" style="margin-top:10px">"The Vitamin C serum is the most stable formula I've tried — no oxidation smell, no irritation. My dark spots from last summer have faded by about 60% in six weeks."</p>
+        <div class="verified-badge">✓ Verified purchase · Vitamin C 15% Brightening</div>
       </div>
-      <!-- Product 5 -->
-      <div class="product-card">
-        <div class="product-img p-img-5">
-          🫧
-          <span class="product-badge badge-best">Bestseller</span>
-        </div>
-        <div class="product-body">
-          <div class="product-skin-type">Sensitive / Redness</div>
-          <h3>Calm & Balance Gel Cream</h3>
-          <p class="product-desc">Centella Asiatica · Madecassoside · Panthenol</p>
-          <div class="product-footer">
-            <div>
-              <span class="product-price">$44</span>
-              <div><span class="stars">★★★★★</span> <span class="rating-count">1,788</span></div>
-            </div>
-            <button class="add-btn" onclick="addToCart(this)">Add</button>
-          </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="container">
+  <div class="newsletter">
+    <div>
+      <h2>Skincare knowledge, weekly.</h2>
+      <p>Ingredient breakdowns, routine guides, and what actually works — straight to your inbox. No fluff.</p>
+    </div>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="your@email.com" id="emailInput">
+      <button class="btn-newsletter" onclick="subscribe()">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="nav-logo">Lumi<span style="color:var(--accent);font-style:italic">ère</span></span>
+        <p>Precision skincare, formulated for real results. No marketing, no filler — just what works.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul class="footer-links">
+          <li><a href="#">Serums</a></li>
+          <li><a href="#">Moisturizers</a></li>
+          <li><a href="#">Cleansers</a></li>
+          <li><a href="#">Sunscreen</a></li>
+          <li><a href="#">Eye Care</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul class="footer-links">
+          <li><a href="#">Ingredient Index</a></li>
+          <li><a href="#">Routine Builder</a></li>
+          <li><a href="#">Skin Type Quiz</a></li>
+          <li><a href="#">Journal</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul class="footer-links">
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Lumière Skin. All rights reserved.</span>
+      <span>Made with precision.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Cart ──
+  function addToCart(btn) {
+    if (window.Lumiere) window.Lumiere.addToCart(btn && btn.dataset ? btn.dataset.add : null);
+  }
+
+  // ── Toast ──
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // ── Newsletter ──
+  function subscribe() {
+    const v = document.getElementById('emailInput').value.trim();
+    if (!v || !v.includes('@')) { showToast('Please enter a valid email'); return; }
+    showToast('✓ Subscribed! Check your inbox.');
+    document.getElementById('emailInput').value = '';
+  }
+
+  // ── Routine Data ──
+  const routines = {
+    morning: [
+      { num: 1, title: 'Gentle Cleanser', desc: 'Start with a low-pH cleanser to remove overnight buildup without stripping.', pill: 'Amino Acid Cleanser', emoji: '🫧', visual: 'Gentle Cleanser', vdesc: 'Work into a lather and rinse with lukewarm water. Pat dry — never rub.', benefits: ['pH 5.5 preserves your acid mantle', 'Amino acids clean without disrupting the barrier', 'Leaves skin ready to absorb actives'] },
+      { num: 2, title: 'Toner / Essence', desc: 'Balance and prep skin to maximise absorption of everything that follows.', pill: 'Hydrating Essence', emoji: '💦', visual: 'Hydrating Essence', vdesc: 'Press a small amount into clean skin with both palms — don\'t wipe. Wait 30 seconds.', benefits: ['Restores skin to optimal hydration level', 'Opens the \"pathway\" for serums', 'Glycerin binds and retains moisture'] },
+      { num: 3, title: 'Serum', desc: 'The highest concentration of active ingredients. This is where the real work happens.', pill: 'Barrier Repair Serum', emoji: '💧', visual: 'Barrier Repair Serum', vdesc: 'Apply 3–4 drops to cleansed skin. Press gently — don\'t rub. Wait 60 seconds before the next step.', benefits: ['Ceramides strengthen the lipid barrier', 'Hyaluronic acid pulls moisture in', 'Niacinamide evens skin tone over time'] },
+      { num: 4, title: 'Moisturizer', desc: 'Lock in everything underneath and reinforce the skin barrier.', pill: 'Calm & Balance Gel Cream', emoji: '🧴', visual: 'Calm & Balance Gel Cream', vdesc: 'Warm a pea-sized amount between fingers and press gently into skin. Let set 1 minute.', benefits: ['Seals in serum actives', 'Centella Asiatica soothes redness', 'Lightweight gel won\'t clog pores'] },
+      { num: 5, title: 'SPF (always last)', desc: 'No skincare works without sun protection. Apply generously to all exposed skin.', pill: 'SPF 50 Mineral', emoji: '🛡️', visual: 'SPF 50 Mineral Sunscreen', vdesc: '1/4 teaspoon for face. Apply as the final step, 10 min before going out. Reapply every 2 hours.', benefits: ['Zinc Oxide 20% broad-spectrum UV', 'Prevents dark spots from forming', 'Invisible finish — no white cast'] },
+    ],
+    evening: [
+      { num: 1, title: 'Double Cleanse', desc: 'Oil cleanser first to dissolve SPF and makeup, then a gentle gel cleanser.', pill: 'Cleansing Oil + Gel', emoji: '🛁', visual: 'Double Cleanse', vdesc: 'Apply oil cleanser to dry skin, massage 60 seconds, rinse. Follow with the gel cleanser on damp skin.', benefits: ['Removes SPF and pollution thoroughly', 'No residue left on skin', 'Sets the stage for treatment actives'] },
+      { num: 2, title: 'Exfoliant (3×/week)', desc: 'AHA or BHA to dissolve dead cells and deep-clean pores. Skip on other nights.', pill: 'BHA Pore Toner', emoji: '🧪', visual: 'BHA Pore Toner', vdesc: 'Saturate a cotton pad and swipe across face. Skip the eye area. Wait 5 minutes before next step.', benefits: ['Salicylic acid clears pore congestion', 'Improves texture over 4–6 weeks', 'No physical scrubbing needed'] },
+      { num: 3, title: 'Retinol (PM only)', desc: 'The gold standard for anti-aging. Apply to fully dry skin for best tolerance.', pill: 'Retinol 0.5% Night Cream', emoji: '🌙', visual: 'Retinol 0.5% Night Cream', vdesc: 'Apply a pea-sized amount to fully dry skin, 20 min after cleansing. Start 2×/week and build up.', benefits: ['Accelerates cell turnover overnight', 'Reduces fine lines in 8–12 weeks', 'Encapsulated form reduces irritation'] },
+      { num: 4, title: 'Night Moisturizer', desc: 'Richer than daytime — works with your skin\'s overnight repair cycle.', pill: 'Barrier Repair Serum', emoji: '💧', visual: 'Evening Moisturizer', vdesc: 'Apply a generous layer as the final step. The skin absorbs more during sleep — take advantage of it.', benefits: ['Fatty acids feed the lipid barrier', 'Panthenol soothes any retinol sensitivity', 'Wakes up to softer, calmer skin'] },
+    ]
+  };
+
+  let currentTab = 'morning';
+  let activeStep = 2;
+
+  function renderRoutine(tab) {
+    const steps = routines[tab];
+    const container = document.getElementById('routineSteps');
+    container.innerHTML = steps.map((s, i) => `
+      <div class="routine-step ${i === activeStep ? 'active' : ''}" onclick="selectStep(${i})">
+        <div class="step-num">${s.num}</div>
+        <div class="step-content">
+          <h3>${s.title}</h3>
+          <p>${s.desc}</p>
+          <span class="step-product-pill">→ ${s.pill}</span>
         </div>
       </div>
-      <!-- Product 6 -->
-      <div class="product-card">
-        <div class="product-img p-img-6">
-          🛡️
-        </div>
-        <div class="product-body">
-          <div class="product-skin-type">Daily — all skin types</div>
-          <h3>SPF 50 Mineral Sunscreen</h3>
-          <p class="product-desc">Zinc Oxide 20% · Niacinamide · Invisible Finish</p>
-          <div class="product-footer">
-            <div>
-              <span class="product-price">$38</span>
+    `).join('');
+    updateVisual(tab, activeStep);
+  }
+
+  function updateVisual(tab, idx) {
+    const s = routines[tab][idx];
+    document.getElementById('visualEmoji').textContent = s.emoji;
+    document.getElementById('visualName').textContent = s.visual;
+    document.getElementById('visualDesc').textContent = s.vdesc;
+    const benEl = document.querySelector('.routine-benefits');
+    benEl.innerHTML = s.benefits.map(b => `
+      <div class="benefit-row"><div class="benefit-check">✓</div><span>${b}</span></div>
+    `).join('');
+  }
+
+  function selectStep(idx) {
+    activeStep = idx;
+    document.querySelectorAll('.routine-step').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+    updateVisual(currentTab, idx);
+  }
+
+  function switchTab(btn, tab) {
+    currentTab = tab;
+    activeStep = 0;
+    document.querySelectorAll('.routine-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderRoutine(tab);
+  }
+
+  renderRoutine('morning');
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="app.js"></script><script src="supabase-storefront.js"></script>
+</body></html>
