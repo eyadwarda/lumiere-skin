@@ -912,6 +912,11 @@
     .reviews-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   }
 
+
+  .footer-contact .footer-links { gap: 12px; }
+  .footer-contact .footer-links a { overflow-wrap: anywhere; }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px; } }
+  @media (max-width: 540px) { .footer-grid { grid-template-columns: 1fr; gap: 18px; } .footer-brand { grid-column: auto; } }
 </style>
 
 
@@ -1178,32 +1183,12 @@
         <span class="nav-logo">Lumi<span style="color:var(--accent);font-style:italic">ère</span></span>
         <p>Precision skincare, formulated for real results. No marketing, no filler — just what works.</p>
       </div>
-      <div class="footer-col">
-        <h4>Products</h4>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
         <ul class="footer-links">
-          <li><a href="#">Serums</a></li>
-          <li><a href="#">Moisturizers</a></li>
-          <li><a href="#">Cleansers</a></li>
-          <li><a href="#">Sunscreen</a></li>
-          <li><a href="#">Eye Care</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Learn</h4>
-        <ul class="footer-links">
-          <li><a href="#">Ingredient Index</a></li>
-          <li><a href="#">Routine Builder</a></li>
-          <li><a href="#">Skin Type Quiz</a></li>
-          <li><a href="#">Journal</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Help</h4>
-        <ul class="footer-links">
-          <li><a href="#">Shipping & Returns</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="tel:+201098096407">+20 109 809 6407</a></li>
+          <li><a href="mailto:eyadwarda06@gmail.com">eyadwarda06@gmail.com</a></li>
+          <li><a href="https://wa.me/201098096407" target="_blank" rel="noopener noreferrer">Chat with us on WhatsApp</a></li>
         </ul>
       </div>
     </div>
