@@ -17,6 +17,8 @@ create table if not exists public.products (
   updated_at timestamptz not null default now()
 );
 
+create sequence if not exists public.order_number_seq start 1049;
+
 create table if not exists public.orders (
   id text primary key default ('LS-' || lpad(nextval('public.order_number_seq')::text, 6, '0')),
   customer_name text not null,
@@ -28,8 +30,6 @@ create table if not exists public.orders (
   status text not null default 'Pending' check (status in ('Pending','Processing','Shipped','Delivered','Cancelled')),
   created_at timestamptz not null default now()
 );
-
-create sequence if not exists public.order_number_seq start 1049;
 
 create table if not exists public.order_items (
   id bigint generated always as identity primary key,
@@ -122,12 +122,16 @@ begin
     raise exception 'Please provide valid delivery details.';
   end if;
 
-  if jsonb_typeof(p_items) <> 'array' or jsonb_array_length(p_items) = 0 then
+  if p_items is null or jsonb_typeof(p_items) <> 'array' or jsonb_array_length(p_items) = 0 then
     raise exception 'Your bag is empty.';
   end if;
+  if (select count(*) from jsonb_array_elements(p_items)) <>
+     (select count(distinct value ->> 'id') from jsonb_array_elements(p_items)) then
+    raise exception 'Duplicate products are not allowed in checkout.';
+  end if;
 
-  -- Validate and lock every requested product before calculating the total.
-  for v_item in select value from jsonb_array_elements(p_items)
+  -- Validate and lock products in a stable order before calculating the total.
+  for v_item in select value from jsonb_array_elements(p_items) order by value ->> 'id'
   loop
     v_qty := (v_item ->> 'qty')::integer;
     if v_qty < 1 or v_qty > 20 then
@@ -158,7 +162,7 @@ begin
     trim(p_customer_address), coalesce(p_note, ''), v_total
   ) returning id into v_order_id;
 
-  for v_item in select value from jsonb_array_elements(p_items)
+  for v_item in select value from jsonb_array_elements(p_items) order by value ->> 'id'
   loop
     v_qty := (v_item ->> 'qty')::integer;
     select * into v_product from public.products where id = v_item ->> 'id';
