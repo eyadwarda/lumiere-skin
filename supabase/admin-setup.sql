@@ -3,4 +3,4 @@
 -- The role is stored in app_metadata, which ordinary users cannot edit themselves.
 update auth.users
 set raw_app_meta_data = coalesce(raw_app_meta_data, '{}'::jsonb) || '{"role":"admin"}'::jsonb
-where email = 'REPLACE_WITH_ADMIN_EMAIL';
+where email = 'eyadwarda06@gmail.com';
