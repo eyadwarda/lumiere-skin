@@ -22,6 +22,17 @@
   const sort=document.getElementById('sortProducts');
   const filters=document.getElementById('categoryFilters');
   let category='All';
+  const categoryGrid=document.querySelector('.categories-grid');
+  function renderCategoryCounts(){
+    if(!categoryGrid)return;
+    const activeProducts=db.products.filter(p=>p.active!==false);
+    categoryGrid.querySelectorAll('[data-count-for]').forEach(node=>{
+      const key=node.dataset.countFor;
+      const count=activeProducts.filter(p=>String(p.category||'').toLowerCase()===key.toLowerCase()).length;
+      node.textContent=count+' '+(count===1?'product':'products');
+      node.closest('.category-card')?.toggleAttribute('hidden',count===0);
+    });
+  }
   function renderProducts(){
     if(!grid)return;
     let list=db.products.filter(p=>p.active!==false&&(category==='All'||p.category===category));
@@ -38,6 +49,7 @@
       <div class="product-footer"><div><span class="product-price">${money(p.price)}</span><div><span class="stars">★★★★★</span></div></div>
       <button class="add-btn" data-add="${escapeHTML(p.id)}" ${p.stock<=0?'disabled':''}>Add</button></div></div></article>`).join('');
     const empty=document.getElementById('emptyProducts');if(empty)empty.hidden=!!list.length;
+    renderCategoryCounts();
   }
   function renderCart(){
     const count=db.cart.reduce((n,x)=>n+x.qty,0),countEl=document.getElementById('cartCount');
@@ -59,6 +71,13 @@
   document.getElementById('checkoutForm')?.addEventListener('submit',e=>{e.preventDefault();toast('Online order service is unavailable. Please try again.');});
   grid?.addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(b)L.addToCart(b.dataset.add)});
   filters?.addEventListener('click',e=>{const b=e.target.closest('[data-category]');if(!b)return;category=b.dataset.category;renderProducts()});
+  categoryGrid?.addEventListener('click',e=>{
+    const card=e.target.closest('[data-category]');
+    if(!card)return;
+    category=card.dataset.category;
+    renderProducts();
+    document.getElementById('products')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
   search?.addEventListener('input',renderProducts);sort?.addEventListener('change',renderProducts);
   document.getElementById('menuToggle')?.addEventListener('click',()=>document.getElementById('mainNav')?.classList.toggle('open'));
   renderProducts();renderCart();
