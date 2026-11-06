@@ -18,6 +18,7 @@
   const save=()=>localStorage.setItem(KEY,JSON.stringify({cart:db.cart}));
   const L=window.Lumiere={db,save,money,escapeHTML,toast,addToCart(id){const p=db.products.find(x=>String(x.id)===String(id));if(!p||p.stock<=0)return toast('Out of stock');const row=db.cart.find(x=>String(x.id)===String(id));if(row)row.qty++;else db.cart.push({id:p.id,qty:1});save();renderCart();toast('✓ Added to cart');}};
   const grid=document.getElementById('productGrid');
+  const showAllButton=document.getElementById('showAllProducts');
   const search=document.getElementById('productSearch');
   const sort=document.getElementById('sortProducts');
   const filters=document.getElementById('categoryFilters');
@@ -35,6 +36,7 @@
   }
   function renderProducts(){
     if(!grid)return;
+    if(showAllButton)showAllButton.hidden=category==='All';
     let list=db.products.filter(p=>p.active!==false&&(category==='All'||p.category===category));
     const q=(search?.value||'').toLowerCase();
     list=list.filter(p=>(p.name+' '+p.brand+' '+p.description).toLowerCase().includes(q));
@@ -75,6 +77,13 @@
     const card=e.target.closest('[data-category]');
     if(!card)return;
     category=card.dataset.category;
+    renderProducts();
+    document.getElementById('products')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  showAllButton?.addEventListener('click',()=>{
+    category='All';
+    if(search)search.value='';
+    if(sort)sort.value='featured';
     renderProducts();
     document.getElementById('products')?.scrollIntoView({behavior:'smooth',block:'start'});
   });
