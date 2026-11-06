@@ -5,7 +5,7 @@ A responsive skincare storefront and admin dashboard built with vanilla HTML, CS
 ## Features
 
 - Responsive storefront with category filters, search and sorting
-- Real product names from CeraVe, The Ordinary, La Roche-Posay and Bioderma
+- Real product listings with product packshots, retailer links and reference prices from Egyptian retailers
 - Shopping bag with quantity controls and removal
 - Simulated checkout that creates an order in browser storage
 - Admin overview with revenue, order and catalogue metrics
@@ -33,20 +33,20 @@ Open `admin.html` or click **Admin demo** in the footer. No login is implemented
 
 - Data is stored in `localStorage` in the current browser only. It is not shared across devices and is not secure.
 - Checkout is simulated. No payment, email, shipping label, or real order notification is created.
-- EGP prices are illustrative portfolio-demo values, not verified live retail prices or an offer to sell. Replace them with supplier-confirmed prices before any commercial use.
-- Product images are editorial skincare imagery and may not depict the exact package. Replace with licensed product packshots before launch.
-- Product details are short summaries; always check the manufacturer's current packaging and official product page for full ingredients and directions.
+- EGP prices are snapshots from Egyptian retailer listings checked in November 2026; they can change and are not a live price feed or an offer to sell.
+- Product packshots are loaded from brand/retailer image URLs. Confirm image-use permissions and keep attribution/retailer links before any commercial launch.
+- Product details are short summaries; always check the manufacturer's current packaging and ingredients.
 
 ## Suggested backend integration
 
 Replace the local `Lumiere` data adapter in `app.js` with API calls. Suggested resources: `GET/POST/PATCH/DELETE /api/products`, `GET/POST/PATCH /api/orders`, `GET/PATCH /api/settings`. Use a real database, server-side validation, authentication/authorization for admin routes, and a payment provider's hosted checkout if real payments are ever added. Do not trust browser storage for inventory, order totals, or admin permissions.
 
-## Product references
+## Product references and price snapshots
 
-- CeraVe Foaming Facial Cleanser: https://www.cerave.eg/en/skincare/cleansers/foaming-facial-cleanser
-- CeraVe Egypt product catalogue: https://www.cerave.eg/en/skincare
-- The Ordinary Egypt: https://theordinary.com/en-eg
-- La Roche-Posay: https://www.laroche-posay.com/
-- Bioderma: https://www.bioderma.com/
+- CeraVe Foaming Facial Cleanser 236ml — EGP 620 at Bloom Pharmacy: https://www.bloompharmacy.com/products/cerave-foaming-cleanser
+- The Ordinary Niacinamide 10% + Zinc 1% 30ml — EGP 950 at Bloom Pharmacy: https://www.bloompharmacy.com/products/the-ordinary-niacinamide-10-zinc-1-solution-egcg-30ml
+- La Roche-Posay Anthelios UVMune 400 Invisible Fluid SPF50+ 50ml — EGP 1,070 at Bloom Pharmacy: https://www.bloompharmacy.com/products/la-roche-posay-anthelios-uvmune-400-invisible-fluid-spf-50-50ml
+- Bioderma Sensibio H2O 250ml — EGP 619 at Abdin Pharmacies: https://abdinpharmacies.com/shop/51881-bioderma-sensibio-h2o-250ml-32575
+- La Roche-Posay Cicaplast Baume B5+ 40ml — EGP 900 at Bloom Pharmacy: https://www.bloompharmacy.com/products/la-roche-posay-cicaplast-baume-b5-soothing-repairing-balm
 
 Product names and brand information are used for a demonstration catalogue. Lumière Skin is not represented as an authorised retailer or affiliated with these brands.
