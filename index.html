@@ -840,6 +840,78 @@
 .shop-checkout-form .shop-cart-total{border-top:1px solid var(--border);padding-top:15px;margin-top:20px}
 .nav-links.open{display:flex}
 @media(max-width:540px){.shop-cart{padding:20px}.shop-checkout-form{padding:20px}}
+
+  /* Mobile-specific storefront layout */
+  .products-toolbar { min-height: 0; margin: 0 0 18px; }
+  .show-all-products {
+    border: 1px solid var(--border); background: var(--surface); color: var(--fg);
+    border-radius: var(--r-sm); padding: 9px 14px; font: 500 13px var(--font-body);
+    cursor: pointer;
+  }
+  .show-all-products:hover { border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 540px) {
+    body { font-size: 14px; padding-left: 14px; padding-right: 14px; }
+    .nav-inner { padding: 12px 0; gap: 10px; }
+    .nav-logo { font-size: 1.15rem; }
+    .nav-cta { padding: 8px 11px; font-size: 12px; }
+    .nav-inner > div { gap: 7px !important; }
+    .hero { padding: 34px 0 28px; }
+    .hero h1 { font-size: clamp(2rem, 9vw, 2.7rem); margin-bottom: 12px; }
+    .hero p { font-size: 13px; margin-bottom: 18px; }
+    .hero-eyebrow { margin-bottom: 12px; }
+    .hero-actions { gap: 8px; }
+    .hero-actions button { padding: 10px 13px; font-size: 12px; }
+    .hero-trust { margin-top: 18px; gap: 10px; }
+    .marquee-strip { margin: 24px 0; padding: 10px 0; }
+    .marquee-track { gap: 26px; }
+    .section { padding: 34px 0; }
+    .section-header { margin-bottom: 20px; }
+    .section-header p { font-size: 13px; margin-top: 6px; }
+    .categories-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .category-card { min-height: 0; padding: 15px 13px; border-radius: 14px; }
+    .category-card .category-count { margin-bottom: 8px; font-size: 10px; }
+    .category-card .category-icon { flex-basis: 36px; width: 36px; height: 36px; font-size: 18px; margin-bottom: 9px; }
+    .category-card h3 { font-size: 1rem; margin-bottom: 5px; }
+    .category-card p { font-size: 11px; line-height: 1.4; -webkit-line-clamp: 2; }
+    .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .product-card { border-radius: 14px; }
+    .product-card .product-img { aspect-ratio: 1 / 1; }
+    .product-card .product-body { padding: 11px; }
+    .product-card .product-skin-type { font-size: 9px; letter-spacing: .02em; margin-bottom: 5px; }
+    .product-card .product-body h3 { font-size: 12px; line-height: 1.3; min-height: 2.6em; margin-bottom: 5px; }
+    .product-card .product-body .product-desc { font-size: 10px; line-height: 1.4; min-height: 4.2em; margin-bottom: 10px; -webkit-line-clamp: 3; }
+    .product-card .product-footer { align-items: flex-end; gap: 5px; flex-wrap: wrap; }
+    .product-card .product-price { font-size: 13px; }
+    .product-card .add-btn { padding: 7px 9px; font-size: 11px; }
+    .routine-section { padding: 18px 14px; border-radius: 18px; }
+    .routine-tabs { width: 100%; margin-bottom: 12px; }
+    .routine-tab { flex: 1; padding: 8px 10px; font-size: 12px; }
+    .routine-grid { display: block; }
+    .routine-step { grid-template-columns: 30px minmax(0,1fr); gap: 10px; padding: 12px 0; }
+    .step-num { width: 30px; height: 30px; font-size: 11px; }
+    .step-content p { font-size: 11px; line-height: 1.45; }
+    .step-product-pill { font-size: 10px; }
+    .routine-visual { display: none; }
+    .reviews-grid {
+      display: flex; gap: 12px; overflow-x: auto; padding: 2px 2px 12px;
+      scroll-snap-type: x mandatory; scrollbar-width: thin;
+    }
+    .review-card { flex: 0 0 86%; scroll-snap-align: start; padding: 18px; }
+    .newsletter { padding: 22px 18px; gap: 14px; }
+    .newsletter h2 { font-size: 1.45rem; }
+    .newsletter p { font-size: 12px; }
+    .newsletter-form { flex-direction: row; gap: 8px; }
+    .newsletter-input { min-width: 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-bottom { gap: 8px; flex-wrap: wrap; font-size: 11px; }
+  }
+  @media (min-width: 541px) and (max-width: 900px) {
+    .categories-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .products-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .reviews-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  }
+
 </style>
 
 
@@ -988,6 +1060,7 @@
       <h2>Bestsellers</h2>
       <p>Formulas selected to make everyday skincare simple and considered.</p>
     </div>
+    <div class="products-toolbar"><button type="button" id="showAllProducts" class="show-all-products" hidden>← View all products</button></div>
     <div class="products-grid" id="productGrid"></div>
     <p id="emptyProducts" class="empty-products" hidden>No products are available right now.</p>
     <div id="categoryFilters" hidden>
